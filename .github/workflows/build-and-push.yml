@@ -1,0 +1,29 @@
+name: Build custom CTFd image
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'my-plugin/**'
+      - '.github/workflows/build-and-push.yml'
+      - '.github/workflows/reusable-build.yml'
+  pull_request:
+    paths:
+      - 'my-plugin/**'
+      - '.github/workflows/build-and-push.yml'
+      - '.github/workflows/reusable-build.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/reusable-build.yml
+    with:
+      package_name: my-plugin
+      dockerfile_path: Dockerfile
+      context_path: ./my-plugin
+      python_version: '3.11'
+    secrets: inherit

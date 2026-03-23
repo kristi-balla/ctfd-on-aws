@@ -1,0 +1,7 @@
+sources:
+  - key: "first-trip"
+    question: "When did the first trip take place?"
+    solution:
+      - "Ende Mai 2025"
+      - "24.05.2025"
+      - "May 2025"
