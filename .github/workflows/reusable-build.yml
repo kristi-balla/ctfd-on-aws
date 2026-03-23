@@ -58,7 +58,7 @@ jobs:
       - name: Run hadolint
         uses: hadolint/hadolint-action@v3.1.0
         with:
-          dockerfile: ${{ inputs.dockerfile_path }}
+          dockerfile: ${{ inputs.context_path }}/${{ inputs.dockerfile_path }}
           failure-threshold: warning
 
   build-and-push:
@@ -99,7 +99,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ${{ inputs.context_path }}
-          file: ${{ inputs.dockerfile_path }}
+          file: ${{ inputs.context_path }}/${{ inputs.dockerfile_path }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
