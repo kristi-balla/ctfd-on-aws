@@ -1,0 +1,15 @@
+fullnameOverride: db
+
+auth:
+  rootPassword: groot
+  database: ctfd
+  username: groot
+  password: groot
+
+persistence:
+  size: 3Gi
+
+image:
+  # the tag was already tested on prod
+  # and v11+ doesn't work
+  tag: 10.11@sha256:dbe56e20372fc6d6b8e0e396866ba89c4c7f128c38c4f59aaa54d957db95790c

@@ -1,0 +1,34 @@
+secretGenerator:
+  - name: aws-bedrock
+    envs:
+      - .env
+  - name: ghcr
+    type: kubernetes.io/dockerconfigjson
+    files:
+      - .dockerconfigjson
+  - name: cert-secret
+    type: kubernetes.io/tls
+    files:
+      - tls.crt
+      - tls.key
+
+configMapGenerator:
+  - name: connections
+    envs:
+      - .connections.env
+
+generatorOptions:
+  # you know where to change it if it annoys you later
+  disableNameSuffixHash: false
+  labels:
+    type: generated
+
+configurations:
+  - kustomizeconfig/issuer.yml
+
+resources:
+  - issuer.yml
+  - gateway.yml
+  - http-route.yml
+  - ctfd.yml
+  - ctfd-svc.yml

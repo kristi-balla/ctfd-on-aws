@@ -1,0 +1,8 @@
+fullnameOverride: redis
+
+auth:
+  # TODO: defer this for later
+  enabled: false
+
+persistence:
+  size: 3Gi

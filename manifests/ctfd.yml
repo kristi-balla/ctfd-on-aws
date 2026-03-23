@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ctfd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ctfd
+  template:
+    metadata:
+      labels:
+        app: ctfd
+    spec:
+      imagePullSecrets:
+        - name: ghcr
+      containers:
+      - name: ctfd
+        image: ghcr.io/kristi-balla/my-plugin:main
+        ports:
+        - containerPort: 8000
+        env:
+          # TODO: refactor this after figuring out AWS IAM policies
+          - name: AWS_BEARER_TOKEN_BEDROCK
+            valueFrom:
+              secretKeyRef: 
+                name: aws-bedrock
+                key: AWS_BEARER_TOKEN_BEDROCK
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef: 
+                name: aws-bedrock
+                key: AWS_ACCESS_KEY_ID
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef: 
+                name: aws-bedrock
+                key: AWS_SECRET_ACCESS_KEY
+          - name: AWS_REGION
+            valueFrom:
+              secretKeyRef: 
+                name: aws-bedrock
+                key: AWS_REGION
+          - name: UPLOAD_FOLDER
+            value: "/var/uploads"
+          - name: WORKERS
+            value: "1"
+          - name: REVERSE_PROXY
+            value: "True"
+          - name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: connections
+                key: DATABASE_URL
+          - name: REDIS_URL
+            valueFrom:
+              configMapKeyRef:
+                name: connections
+                key: REDIS_URL
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "1"
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
