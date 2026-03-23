@@ -1,4 +1,3 @@
-
 def build_prompt(question: str, answer: str, solution: str) -> str:
 
     prompt = f"""
