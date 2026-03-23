@@ -1,11 +1,6 @@
-import json
 
-def build_prompt(
-    question: str,
-    answer: str,
-    solution: str
-) -> str:
-    
+def build_prompt(question: str, answer: str, solution: str) -> str:
+
     prompt = f"""
 
 # Answer Quality Judge
@@ -27,16 +22,14 @@ Only return `pass` or `fail` and no other output
 
     return prompt
 
+
 def request_verdict(client, question: str, answer: str, solution: str) -> bool:
     prompt = build_prompt(question, answer, solution)
 
-    response = client.converse( 
+    response = client.converse(
         modelId="amazon.nova-lite-v1:0",
-        messages=[{ 
-            "role": "user", 
-            "content": [{"text": f"{prompt}"}]
-        }]  
-    )  
+        messages=[{"role": "user", "content": [{"text": f"{prompt}"}]}],
+    )
 
     result = response["output"]["message"]["content"][0]["text"]
     return True if result == "pass" else False
