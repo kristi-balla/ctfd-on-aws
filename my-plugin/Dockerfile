@@ -7,3 +7,6 @@ COPY requirements.txt ./
 
 # hadolint ignore=DL3042
 RUN pip install -r requirements.txt
+
+RUN mkdir -p /opt/CTFd/CTFd/plugins/my-flag
+COPY . /opt/CTFd/CTFd/plugins/my-flag
