@@ -1,6 +1,3 @@
 
 # secret config files
-# TODO: figure out how to supply these through AWS
-*.env
-*.dockerconfigjson
-tls.*
+*.agekey

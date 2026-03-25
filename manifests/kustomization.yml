@@ -1,17 +1,3 @@
-secretGenerator:
-  - name: aws-bedrock
-    envs:
-      - .env
-  - name: ghcr
-    type: kubernetes.io/dockerconfigjson
-    files:
-      - .dockerconfigjson
-  - name: cert-secret
-    type: kubernetes.io/tls
-    files:
-      - tls.crt
-      - tls.key
-
 configMapGenerator:
   - name: connections
     envs:
@@ -23,10 +9,10 @@ generatorOptions:
   labels:
     type: generated
 
-configurations:
-  - kustomizeconfig/issuer.yml
-
 resources:
+  - aws-bedrock-secret.yml
+  - ghcr-secret.yml
+  - tls-secret.yml
   - issuer.yml
   - gateway.yml
   - http-route.yml

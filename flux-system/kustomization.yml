@@ -1,0 +1,14 @@
+secretGenerator:
+  - name: sops-age
+    type: Opaque
+    files:
+      # only available locally, pushed nowhere and in .gitignore
+      - age.agekey
+
+configurations:
+  - kustomizeconfig/controller.yml
+
+resources:
+  - management.yml
+  - source.yml
+  - controller.yml
